@@ -10,7 +10,6 @@ const editId = ref(null)
 
 const totalMahasiswa = computed(() => daftarMahasiswa.value.length)
 
-// Filter berdasarkan nama atau alamat
 const daftarTampil = computed(() => {
   if (!kataKunci.value.trim()) return daftarMahasiswa.value
   return daftarMahasiswa.value.filter(m =>
@@ -30,7 +29,6 @@ const tambahMahasiswa = () => {
     }
     editId.value = null
   } else {
-    // Mode tambah
     daftarMahasiswa.value.push({
       id: Date.now(),
       nama: namaBaru.value,
@@ -46,7 +44,6 @@ const hapusMahasiswa = (id) => {
   daftarMahasiswa.value = daftarMahasiswa.value.filter(m => m.id !== id)
 }
 
-// Button Edit
 const editMahasiswa = (mahasiswa) => {
   namaBaru.value = mahasiswa.nama
   alamatBaru.value = mahasiswa.alamat
@@ -54,7 +51,6 @@ const editMahasiswa = (mahasiswa) => {
   inputNamaMahasiswa.value.focus()
 }
 
-// Hapus semua
 const hapusSemua = () => {
   if (confirm('Yakin ingin menghapus semua data mahasiswa?')) {
     daftarMahasiswa.value = []
@@ -74,7 +70,6 @@ watch(namaBaru, (baru, lama) => {
   <div class="form-wrapper">
     <h2>Todo-List Absensi</h2>
 
-    <!-- Form input -->
     <input
       v-model="namaBaru"
       ref="inputNamaMahasiswa"
@@ -90,14 +85,12 @@ watch(namaBaru, (baru, lama) => {
       {{ editId ? 'Update' : 'Daftar' }}
     </button>
 
-    <!-- Filter -->
     <input
       v-model="kataKunci"
       placeholder="Cari nama/alamat..."
       class="form-input"
     />
 
-    <!-- Tampilkan daftar -->
     <ol>
       <li v-for="mahasiswa in daftarTampil" :key="mahasiswa.id" class="student-item">
         {{ mahasiswa.nama }} - {{ mahasiswa.alamat }}
@@ -106,7 +99,6 @@ watch(namaBaru, (baru, lama) => {
       </li>
     </ol>
 
-    <!-- Total & hapus semua -->
     <p>Total mahasiswa: {{ totalMahasiswa }}</p>
     <button @click="hapusSemua" class="clear-button">Hapus Semua</button>
   </div>
